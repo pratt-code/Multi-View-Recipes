@@ -1,0 +1,16 @@
+from openai import OpenAI
+
+client = OpenAI(api_key="APIKEY")
+
+def getCompletion(instructions, ingredients, model="gpt-3.5-turbo"):
+    prompt = "Take the following directions and ingredients about this recipe and generate 10 QA pairs about it. Return the QA pairs in the form of valid JSON that could be parsed. Here are the ingredients: " + ingredients + ". And here are the instructions: " + instructions
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": prompt,
+            }
+        ],
+        model="gpt-3.5-turbo"
+    )
+    return chat_completion.choices[0].message.content
